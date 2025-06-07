@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/cryptoscreener:latest .
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/cryptoscreener:latest ./CryptoScreener
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/cryptoscreener:latest
