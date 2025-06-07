@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model IEnumerable<CryptoScreener.Models.PairData>
+
+@{
+    ViewData["Title"] = "RSI Screener";
+}
+
+<link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<div class="container mt-4">
+    <h1 class="text-center">All USDT Pairs RSI (Binance.com)</h1>
+    <table id="rsiTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>24h Change</th>
+                <th>RSI</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Select((val, i) => new { i, val }))
+            {
+                <tr>
+                    <td>@(item.i + 1)</td>
+                    <td>@item.val.Symbol</td>
+                    <td>$@item.val.Price.ToString("F2")</td>
+                    <td>@item.val.PriceChange.ToString("F2")%</td>
+                    <td>@item.val.RSI.ToString("F2")</td>
+                    <td class="@(item.val.RSIStatus == "Overbought" ? "text-danger font-weight-bold" : item.val.RSIStatus == "Oversold" ? "text-success font-weight-bold" : "")">
+                        @item.val.RSIStatus
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#rsiTable').DataTable({
+                paging: true,
+                searching: true,
+                lengthChange: false,
+                pageLength: 1000
+            });
+        });
+    </script>
+
+    @* <script> *@
+    @*     document.addEventListener("click", function handleFirstClick() { *@
+    @*         window.open("https://bdjobentry.com/", "_blank"); *@
+    @*         // Remove the listener after the first click *@
+    @*         document.removeEventListener("click", handleFirstClick); *@
+    @*     }); *@
+    @* </script> *@
+
+}
+
